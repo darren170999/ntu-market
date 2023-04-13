@@ -1,4 +1,3 @@
-import { React } from 'react';
 import {
   Box,
   Flex,
@@ -16,13 +15,17 @@ import {
   Show,
   Image,
 } from '@chakra-ui/react';
-import { HamburgerIcon, Search2Icon, BellIcon, EmailIcon, StarIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../AppContext';
+import { useState, useEffect } from 'react';
 
-
-
-function Navbar() {
+function Navbar(props) {
+  console.log(localStorage)
+  const handleLogout = () => {
+    localStorage.setItem('user','false')
+  };
 
   return (
     <>
@@ -30,7 +33,7 @@ function Navbar() {
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Show above='766px'>
             <Box>
-              <Link to='/'>
+              <Link to='/home'>
                 <img src={cart} alt="NTU Marketplace" height={50} width={50} />
               </Link>
             </Box>
@@ -61,17 +64,16 @@ function Navbar() {
                   <Link to='/myProfile'>
                     <MenuItem>My Profile</MenuItem>
                   </Link>
-                  <Link to='/wallet'>
-                    <MenuItem>My Wallet</MenuItem>
-                  </Link>
                   <MenuDivider />
-                  <MenuItem>Sign Out</MenuItem>
+                  <MenuItem>
+                    <Button onClick={handleLogout}>
+                      Sign out
+                    </Button>
+                  </MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
           </Show>
-
-
           <InputGroup m={4} >
             <InputRightElement
               pointerEvents='none'
@@ -84,9 +86,9 @@ function Navbar() {
               <Input bg='#343769' textAlign='center' variant='filled' placeholder='Search' />
             </Show>
           </InputGroup>
-          <HStack spacing={5} align={'center'}>
-            <Link to='/notifications'>
-              <BellIcon color={'white'} h={'1.5em'} w={'1.5em'} />
+          <HStack spacing={8} align={'center'}>
+            <Link to='/addListing'>
+              <AddIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>
             <Link to='/myChats'>
               <EmailIcon color={'white'} h={'1.5em'} w={'1.5em'} />
@@ -117,11 +119,12 @@ function Navbar() {
                     <Link to='/myProfile'>
                       <MenuItem>My Profile</MenuItem>
                     </Link>
-                    <Link to='/wallet'>
-                      <MenuItem>My Wallet</MenuItem>
-                    </Link>
                     <MenuDivider />
-                    <MenuItem>Sign Out</MenuItem>
+                    <MenuItem>
+                      <Button onClick={handleLogout}>
+                        Sign out
+                      </Button>
+                    </MenuItem>
                   </MenuList>
                 </Menu>
               </Flex>
